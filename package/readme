@@ -1,1 +1,7 @@
+this file contains all scripts used during the training and evaluation of the model:
 
+(1) _init_ - a initializer
+(2) dataset - data loading 
+(3) model - bilstm model
+(4) nn - neuroal networds (different layers)
+(5) utils - a script for additonal functions
