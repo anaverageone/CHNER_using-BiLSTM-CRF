@@ -1,5 +1,5 @@
 This directory contains four editions of the training corpus (train-dev sets) of CHNER datasets named as the following:
-(1) char- original corpus;
-(2) jieba1- jieba implemented by default dictionary;
-(3) jieba2 - jieba implemented by default dictionary + CHNER lexicon;
-(4) jieba3 - jieba implemented by default dictionary + CHNER + External lexicon.
+(1) train_char & dev_char - original corpus;
+(2) train_jieba1 & dev_jieba1 - original corpus processed by jieba (default dictionary);
+(3) train_jieba2 & dev_jieba2 - original corpus processed by jieba (default dictionary + CHNER lexicon);
+(4) train_jieba3 & dev_jieba3 - original corpus processed by jieba (default dictionary + CHNER + External lexicon).
