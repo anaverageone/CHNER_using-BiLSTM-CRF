@@ -1,9 +1,0 @@
-This directory contains test data of the CHNER datasets in four editions + a truth file with NER annations:
-Test data:
-(1) ROCLING22_CHNER_test - original test set;
-(2) test_jieba1 - original test set processed by jieba (default dictionary);
-(3) test_jieba1 - original test set processed by jieba (default dictionary + CHNER lexicon);
-(4) test_jieba1 - original test set processed by jieba (default dictionary + CHNER + External lexicon).
-
-Truth file:
-ROCLING22_CHNER_truth
