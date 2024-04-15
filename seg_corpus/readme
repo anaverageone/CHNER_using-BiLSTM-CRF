@@ -1,0 +1,11 @@
+ 
+This directory contains all corpora used for modifying the jieba word-cut dictionary of the following:
+(1) CBLUE-main - corpora from the CBLUE corpus, including 4 sets of data from CHIP-CDN, CMeEE-V2, CMeIE-V2, IMCS-V2-NER;
+(2) chatbot-base-on-Knowledge-Graph-master - corpus from chatbot lexicon database;
+(3) ROLING - a directory used to save processed lexicons that are ready to use;
+(4) THUOCL-master - CHNER corpus created by THUOCL team;
+(5) seg_corpus.py - a python file that parse the raw corpora for further computation; 
+(6) ROLING_NER.txt - CHNER lexicon from the CHNER datasets;
+(7) CBLUE_corpus.txt - processed lexicon file from the CBLUE database; 
+(8) chatbot_corpus_new.txt - processed lexicon file from the chatbot database;
+(9) THUOCL_corpus_new.txt - processed lexicon file from the THUOCL database.
