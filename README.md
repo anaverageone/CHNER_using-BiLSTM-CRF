@@ -23,7 +23,6 @@ Training Set|Validation set|Test set (sentence samples)
 28,161|2,531|3,205|
 
 ### Data Format
-
 Each line contains a character and its label, separated by "\t" or space. Each sentence is followed by a blank line.
 
 ```
@@ -40,13 +39,20 @@ Each line contains a character and its label, separated by "\t" or space. Each s
 空	O
 行	O
 ```
+## Prepare Data and word embedding corpus
+We use the ROLING 2022 dataset (https://github.com/NCUEE-NLPLab/ROCLING-2022-ST-CHNER). Download and unzip it in `data/roling/`.
 
-We use the ROLING 2022 dataset (https://github.com/NCUEE-NLPLab/ROCLING-2022-ST-CHNER). Download and unzip it in `data/roling/`, 
-(1) run 'parse_ROLING.py' to get all the original files (train, dev, test)
+(1) run the following to get all the original files (train, dev, test);
+```
+parse_ROLING.py
+``` 
 
-(2) run ‘seg_corpus.py’under the '/seg_corpus/' directory to prepare domain lexicons 
+(2) run run the following under the '/seg_corpus/' directory to prepare domain lexicons;
+```
+seg_corpus.py
+```
 
-(3) run the following command to generate four dictionaries for mapping lexicons in each set of data
+(3) run the following command to generate four dictionaries for mapping lexicons in each set of data;
 
 ```
 python process_roling.py --sen_file ./data/embedding/ROLING_embed_char.txt --dict_file ./data/word2id_char.json
