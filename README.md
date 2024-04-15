@@ -107,7 +107,7 @@ python main.py --model bilstm --crf --mode test
 | I-TIME | 0.756 | 0.409 | 0.531 | 408 |
 | I-TREAT | 0.840 | 0.602 | 0.701 | 1251 |
 | O | 0.845 | 0.982 | 0.909 | 77019 |
-| accuracy| | | 0.844 | 118116 |
+| accuracy| | 0.844 | 118116 |
 | macro avg| 0.795 | 0.524 | 0.621 | 118116 |
 |weighted avg| 0.843 | 0.844 | 0.831 | 118116 |
 
@@ -139,9 +139,9 @@ python main.py --model bilstm --crf --mode test
 | I-TREAT | 0.936 | 0.490 | 0.643 | 1251 |
 | O | 0.866 | 0.984 | 0.922 | 77019 |
 
-| **accuracy** | 0.860 | 118116 |
-| **macro avg** | 0.831 | 0.521 | 0.612 | 118116 |
-| **weighted avg** | 0.859 | 0.860 | 0.847 | 118116 |
+| accuracy| |0.860 | 118116 |
+| macro avg|0.831 | 0.521 | 0.612 | 118116 |
+|weighted avg| 0.859 | 0.860 | 0.847 | 118116 |
 
 ## References
 
