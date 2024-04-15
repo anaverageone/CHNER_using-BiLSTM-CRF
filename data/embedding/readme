@@ -1,1 +1,6 @@
+This directory contains four pre-trained word-embeddings of the CHNER corpus using Word2Vec (CBOW), the files are named:
 
+(1) ROLING_w2v_char- CHNER corpus;
+(2) ROLING_w2v_jieba1- CHNER corpus segmented by jieba (default dictionary);
+(3) ROLING_w2v_jieba2 - CHNER corpus segmented by jieba (default dictionary+ CHNER lexicon);
+(4) ROLING_w2v_jieba3 - CHNER corpus segmented by jieba (default dictionary+ CHNER + External lexicon).
