@@ -1,158 +1,150 @@
-# CHNER_using-BiLSTM-CRF
-CHNER_using BiLSTM-CRF
+# Chinese-NER
+Chinese Named Entity Recognition (BiLSTM-crf model enhanced by word segmentation).
 
-## Steps 1 Directories
+## Update
+**Warning**: When the training loss drops but the evaluation metrics are 0, please check whether the  learning rate is suitable for the Bi-LSTM model.
 
-+ `Predict` : test predictions
-+ `data` : input data
-+ `package` : model
-+ `saved_model` : trained models with parameters and scores
-+ `embedding`：w2v embeddings 
+## Environment
 
-## Steps 2 Evironment initlization
-+ conda create --name toturial python=3.7
-+ pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
-+ pip install pandas==1.3.5
-+ pip install tqdm==4.62.3
-+ pip install gensim==4.2.0
+* python>=3.6.4
+* pytorch==1.5.0
+* seqeval==0.0.12
+* tqdm ==  4.62.3
 
-## Steps 3 Pre-training word embeddings (w2v)
+## Model
+
+* BiLSTM + CRF
+
+
+## Data Overview
+
+Training Set|Validation set|Test set (sentence samples)
+|:-:|:-:|:-:|
+28,161|2,531|3,205|
+
 ### Data Format
-Use the data for training embeddings. Separate characters with spaces as shown below:：
+
+Each line contains a character and its label, separated by "\t" or space. Each sentence is followed by a blank line.
+
 ```
-当 希 望 工 程 救 助 的 百 万 儿 童 成 长 起 来 ， 科 教 兴 国 蔚 然 成 风 时 ， 今 天 有 收 藏 价 值 的 书 你 没 买 ， 明 日 就 叫 你 悔 不 当 初 ！ 
-藏 书 本 来 就 是 所 有 传 统 收 藏 门 类 中 的 第 一 大 户 ， 只 是 我 们 结 束 温 饱 的 时 间 太 短 而 已 。 
-因 有 关 日 寇 在 京 掠 夺 文 物 详 情 ， 藏 界 较 为 重 视 ， 也 是 我 们 收 藏 北 史 料 中 的 要 件 之 一 。 
+中	B-LOC
+国	I-LOC
+很	O
+大	O
+
+句	O
+子	O
+结	O
+束	O
+是	O
+空	O
+行	O
 ```
 
-### Train
-```
-python word2vec_train.py
-```
+We use the ROLING 2022 dataset (https://github.com/NCUEE-NLPLab/ROCLING-2022-ST-CHNER). Download and unzip it in `data/roling/`, 
+(1) run 'parse_ROLING.py' to get all the original files (train, dev, test)
 
-## Steps 4 training BiLSTM-CRF  
-### Data Format
-Use the BIO tagging format. Separate characters and labels with spaces. Separate sentences with blank lines as shown below:
-#### Train and Evaluation file
-```
-淮 B-LOC
-科 O
-技 O
-集 O
-市 O
-， O
-还 O
-吸 O
-引 O
-了 O
-联 B-ORG
-合 I-ORG
-国 I-ORG
-工 I-ORG
-业 I-ORG
-发 I-ORG
-展 I-ORG
-组 I-ORG
-织 I-ORG
-中 I-ORG
-国 I-ORG
-投 I-ORG
-资 I-ORG
-促 I-ORG
-进 I-ORG
-处 I-ORG
-等 O
-国 O
-内 O
-外 O
-十 O
-多 O
-家 O
-知 O
-名 O
-投 O
-资 O
-商 O
-。 O
+(2) run ‘seg_corpus.py’under the '/seg_corpus/' directory to prepare domain lexicons 
 
-他 O
-们 O
-不 O
-仅 O
-购 O
-买 O
-技 O
-术 O
-， O
-而 O
-且 O
-引 O
-进 O
-科 O
-技 O
-人 O
-才 O
-。 O
-```
-#### Test file
-```
-沙
-巴
-航
-空
-服
-务
-中
-心
+(3) run the following command to generate four dictionaries for mapping lexicons in each set of data
 
-什
-么
-是
-格
-鲁
-吉
-亚
-统
-一
-共
-产
-党
 ```
-### Parameter
+python process_roling.py --sen_file ./data/embedding/ROLING_embed_char.txt --dict_file ./data/word2id_char.json
 
---model: Train or Test
---save_model_name: Name of saved model parameters (.pt format)
---predict_name: Name of saved prediction file (.txt format)
---load_model_name: Name of model to load
---Train_data_path: Path to training data
---Eval_data_path: Path to evaluation data
---Test_data_path: Path to testing data
---Epoch: Number of training epochs
---lr: Learning rate
---batch_size: Batch size
---lstm_hidden_dim: LSTM hidden dimension
---lstm_dropout_rate: LSTM dropout rate
---seed: Random seed
---gpu: Which GPU to use
---embedding: File path of word embeddings
---dimension: Dimension of word embeddings
+python process_roling.py --sen_file ./data/embedding/ROLING_embed_jieba1.txt --dict_file ./data/word2id_jieba1.json
+
+python process_roling.py --sen_file ./data/embedding/ROLING_embed_jieba2.txt --dict_file ./data/word2id_jieba2.json
+
+python process_roling.py --sen_file ./data/embedding/ROLING_embed_jieba3.txt --dict_file ./data/word2id_jieba3.json
+
+```
+(4) Modify the `labels` in `main.py` according to your dataset:
+
+```
+labels = ['B-BODY', 'O', 'I-BODY', 'B-CHEM', 'I-CHEM', 'B-SYMP', 'I-SYMP', 'B-SUPP', 'I-SUPP', 'B-DISE', 'I-DISE', 'B-TREAT', 'I-TREAT', 'B-TIME', 'I-TIME', 'B-DRUG', 'I-DRUG', 'B-EXAM', 'I-EXAM', 'B-INST', 'I-INST']
+```
 
 ## Usage
-
-### Train
-```
-python main.py --mode Train --save_model_name ROLING_char_e3.pt  --Epoch 3 --gpu 1 --Train_data_path data/train_char.txt  --Eval_data_path data/dev_char.txt  --embedding embedding/ROLING_w2v_char.txt
-
+### **Train**
 ```
 
-### Test
-```
-python main.py --mode Test --load_model_name tutorial --predict_name predict.txt --gpu 0
-```
-## Steps 5 Evaluation
-First, execute turn_to_eval.py to generate eval.txt, then proceed to execute conlleval.py to get the result score.txt.
-```
-python turn_to_eval.py --truth truth.txt --prediction predict.txt 
-python conlleval.py < eval.txt 
+# run bilstm+crf
+python main.py --model bilstm --crf --mode train 
 
 ```
+### **Test**
+
+```
+python main.py --model bilstm --crf --mode test
+
+```
+
+## BiLSTM + CRF model results on the ROLING2022 CHNER datasets are as followed:
+
+
+**Jieba Base (epoch 5)**
+
+| precision | recall | f1-score | support |
+| :-: | :-: | :-: | :-: |
+| B-BODY | 0.819 | 0.659 | 0.731 | 5315 |
+| B-CHEM | 0.837 | 0.537 | 0.654 | 1718 |
+| B-DISE | 0.885 | 0.589 | 0.707 | 2609 |
+| B-DRUG | 0.787 | 0.393 | 0.524 | 481 |
+| B-EXAM | 0.623 | 0.464 | 0.532 | 207 |
+| B-INST | 0.700 | 0.224 | 0.339 | 250 |
+| B-SUPP | 0.703 | 0.530 | 0.604 | 183 |
+| B-SYMP | 0.771 | 0.549 | 0.642 | 1944 |
+| B-TIME | 0.807 | 0.487 | 0.608 | 197 |
+| B-TREAT | 0.797 | 0.585 | 0.675 | 468 |
+| I-BODY | 0.822 | 0.657 | 0.730 | 8254 |
+| I-CHEM | 0.831 | 0.570 | 0.676 | 3851 |
+| I-DISE | 0.932 | 0.627 | 0.750 | 7571 |
+| I-DRUG | 0.824 | 0.430 | 0.565 | 1599 |
+| I-EXAM | 0.840 | 0.437 | 0.575 | 733 |
+| I-INST | 0.676 | 0.192 | 0.300 | 629 |
+| I-SUPP | 0.771 | 0.588 | 0.667 | 551 |
+| I-SYMP | 0.821 | 0.488 | 0.612 | 2878 |
+| I-TIME | 0.756 | 0.409 | 0.531 | 408 |
+| I-TREAT | 0.840 | 0.602 | 0.701 | 1251 |
+| O | 0.845 | 0.982 | 0.909 | 77019 |
+
+| **accuracy** | 0.844 | 118116 |
+| **macro avg** | 0.795 | 0.524 | 0.621 | 118116 |
+| **weighted avg** | 0.843 | 0.844 | 0.831 | 118116 |
+
+
+
+**Baseline (epoch 3)**
+
+|label| precision| recall | f1-score| support
+| :-:     | :-:     | :-:     | :-:     | :-:     |
+| B-BODY | 0.776 | 0.716 | 0.745 | 5315 |
+| B-CHEM | 0.789 | 0.544 | 0.644 | 1718 |
+| B-DISE | 0.851 | 0.676 | 0.754 | 2609 |
+| B-DRUG | 0.811 | 0.455 | 0.583 | 481 |
+| B-EXAM | 0.595 | 0.440 | 0.506 | 207 |
+| B-INST | 0.821 | 0.092 | 0.165 | 250 |
+| B-SUPP | 0.756 | 0.661 | 0.706 | 183 |
+| B-SYMP | 0.774 | 0.532 | 0.630 | 1944 |
+| B-TIME | 0.908 | 0.350 | 0.505 | 197 |
+| B-TREAT | 0.808 | 0.476 | 0.599 | 468 |
+| I-BODY | 0.826 | 0.721 | 0.770 | 8254 |
+| I-CHEM | 0.856 | 0.617 | 0.717 | 3851 |
+| I-DISE | 0.917 | 0.728 | 0.812 | 7571 |
+| I-DRUG | 0.897 | 0.532 | 0.667 | 1599 |
+| I-EXAM | 0.857 | 0.458 | 0.597 | 733 |
+| I-INST | 0.883 | 0.084 | 0.154 | 629 |
+| I-SUPP | 0.790 | 0.677 | 0.729 | 551 |
+| I-SYMP | 0.835 | 0.446 | 0.582 | 2878 |
+| I-TIME | 0.901 | 0.267 | 0.412 | 408 |
+| I-TREAT | 0.936 | 0.490 | 0.643 | 1251 |
+| O | 0.866 | 0.984 | 0.922 | 77019 |
+
+| **accuracy** | 0.860 | 118116 |
+| **macro avg** | 0.831 | 0.521 | 0.612 | 118116 |
+| **weighted avg** | 0.859 | 0.860 | 0.847 | 118116 |
+
+## References
+
+* **pytorch CRF**: https://github.com/kmkurn/pytorch-crf
+* **Chinese-NER**:  https://github.com/xiaofei05/Chinese-NER.git
