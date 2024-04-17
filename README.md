@@ -41,9 +41,11 @@ Each line contains a character and its label, separated by "\t" or space. Each s
 ```
 ## Prepare Data and word2id corpus
 use each datasets as word2id corpus, with a space between words. The example is as follows:
+```
 当 希 望 工 程 救 助 的 百 万 儿 童 成 长 起 来 ， 科 教 兴 国 蔚 然 成 风 时 ， 今 天 有 收 藏 价 值 的 书 你 没 买 ， 明 日 就 叫 你 悔 不 当 初 ！ 
 藏 书 本 来 就 是 所 有 传 统 收 藏 门 类 中 的 第 一 大 户 ， 只 是 我 们 结 束 温 饱 的 时 间 太 短 而 已 。 
 因 有 关 日 寇 在 京 掠 夺 文 物 详 情 ， 藏 界 较 为 重 视 ， 也 是 我 们 收 藏 北 史 料 中 的 要 件 之 一 。
+```
 
 
 We use the ROLING 2022 dataset (https://github.com/NCUEE-NLPLab/ROCLING-2022-ST-CHNER). Download and unzip it in `data/roling/`.
