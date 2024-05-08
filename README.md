@@ -160,3 +160,4 @@ python main.py --model bilstm --crf --mode test
 
 * **pytorch CRF**: https://github.com/kmkurn/pytorch-crf
 * **Chinese-NER**:  https://github.com/xiaofei05/Chinese-NER.git
+* **Heatmap-Confusion-Matrix**: https://github.com/jkmackie/confusion_matrix_visualization.git
